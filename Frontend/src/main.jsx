@@ -9,6 +9,7 @@ import { ApolloProvider } from '@apollo/client'
 import "@Sass/animation.scss"
 import "@Sass/constants.scss"
 import "@Sass/functions.scss"
+import "@Sass/reset.scss"
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

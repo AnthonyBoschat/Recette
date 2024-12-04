@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+      "baseUrl": "./src",
+      "paths": {
+        // "@src":["./src/*"],
+        "@Components/*": ["Components/*"],
+        "@Containers/*": ["Containers/*"],
+        "@Layout/*": ["Layout/*"],
+        "@Pages/*": ["Pages/*"],
+        
+        // "@Physics/*": ["Physics/*"],
+        "@Sass/*": ["Physics/Sass/*"],
+        "@Redux/*": ["Physics/Redux/*"],
+        "@Query/*": ["Physics/Query/*"],
+        "@Services/*": ["Physics/Services/*"],
+        "@Utils/*": ["Physics/Utils/*"],
+        "@Constants/*": ["Physics/Constants/*"]
+      }
+    },
+    "include": ["src"]
+  }
+  

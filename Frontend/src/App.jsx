@@ -1,11 +1,14 @@
 
-
+import Header from "@Containers/Header/Header";
+import Content from "@Layout/Content/Content";
+import "./App.scss"
 export default function App() {
 
   
   return (
-    <>
-      <h1>Hello</h1>
-    </>
+    <main>
+      <Header/>
+      <Content/>
+    </main>
   )
 }

@@ -1,0 +1,35 @@
+header{
+    // background-color: red; //
+    width: 100vw;
+    display: flex;
+    padding-left: 5vw;
+    gap: 1rem;
+    align-items: center;
+    font-family: "Outfit";
+    font-weight: 400;
+    button{
+        all:unset;
+        height: fit-content;
+        padding: 0.5rem 1rem 0.5rem 1rem;
+        border-radius: 4px;
+        color: black;
+        opacity: 0.8;
+        background-color: rgb(133, 183, 148);
+        letter-spacing: 1px;
+        transition: all 0.1s ease-in-out;
+        outline: 1px solid rgba(0, 0, 0, 0.5);
+        
+        &:hover{
+            cursor: pointer;
+            // background-color: ;
+            opacity: 1;
+            outline: 1px solid rgb(0, 0, 0);
+        }
+
+        &.selected{
+            opacity: 1;
+            outline: 1px solid rgb(0, 0, 0);
+        }
+
+    }
+}

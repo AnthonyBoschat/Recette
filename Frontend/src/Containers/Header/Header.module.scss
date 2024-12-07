@@ -10,23 +10,24 @@ header{
     button{
         all:unset;
         height: fit-content;
-        padding: 0.5rem 1rem 0.5rem 1rem;
+        padding: 0.3rem 1rem 0.3rem 1rem;
         border-radius: 4px;
         color: black;
         opacity: 0.8;
-        background-color: rgb(133, 183, 148);
+        background-color: rgba(203, 230, 211, 0.667);
         letter-spacing: 1px;
         transition: all 0.1s ease-in-out;
         outline: 1px solid rgba(0, 0, 0, 0.5);
         
         &:hover{
             cursor: pointer;
-            // background-color: ;
+            background-color: rgba(191, 229, 202, 0.667);
             opacity: 1;
             outline: 1px solid rgb(0, 0, 0);
         }
 
         &.selected{
+            background-color: rgba(191, 229, 202, 0.667);
             opacity: 1;
             outline: 1px solid rgb(0, 0, 0);
         }

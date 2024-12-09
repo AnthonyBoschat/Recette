@@ -108,3 +108,24 @@ input.dark{
 input.stepNumber{
     pointer-events: none;
 }
+
+input.duration{
+
+    
+    // &::-webkit-datetime-edit-fields-wrapper {
+    //     display: flex;
+    //     justify-content: center;
+    //   }
+    // &::-webkit-datetime-edit-hour-field {
+    // background-color: #f2f4f5;
+    // border-radius: 15%;
+    // padding: 19px 13px;
+    // }
+      
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+    display: none;
+    filter: invert(0.5) sepia(1) saturate(5) hue-rotate(175deg);
+ }
+

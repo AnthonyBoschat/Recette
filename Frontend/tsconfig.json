@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "baseUrl": "./",
+    "paths": {
+      "@Components/*": ["src/Components/*"],
+      "@Containers/*": ["src/Containers/*"],
+      "@Layout/*": ["src/Layout/*"],
+      "@Pages/*": ["src/Pages/*"],
+      "@Sass/*": ["src/Physics/Sass/*"],
+      "@Redux/*": ["src/Physics/Redux/*"],
+      "@Query/*": ["src/Physics/Query/*"],
+      "@Services/*": ["src/Physics/Services/*"],
+      "@Utils/*": ["src/Physics/Utils/*"],
+      "@Constants/*": ["src/Physics/Constants/*"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "build"]
+}

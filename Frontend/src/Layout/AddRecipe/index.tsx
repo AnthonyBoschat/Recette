@@ -128,6 +128,7 @@ export default function AddRecipeLayout(){
     const handleSubmit = (e:BaseSyntheticEvent) => {
         e.preventDefault()
         console.log("submit")
+        console.log(recipeState)
     }
 
 

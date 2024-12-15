@@ -7,6 +7,10 @@
         "@Containers/*": ["Containers/*"],
         "@Layout/*": ["Layout/*"],
         "@Pages/*": ["Pages/*"],
+        "@Features/*": ["Features/*"],
+        "@Shared/*": ["Shared/*"],
+        
+        "@Types/*": ["Shared/Types/*"],
         
         // "@Physics/*": ["Physics/*"],
         "@Sass/*": ["Physics/Sass/*"],

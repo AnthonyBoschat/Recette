@@ -1,4 +1,7 @@
-import AddRecipeLayout from "@Layout/AddRecipe";
+import AddRecipeLayout from "../Layout";
+
+
+
 
 export default function AddRecipePage(){
 

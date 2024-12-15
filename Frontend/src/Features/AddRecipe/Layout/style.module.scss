@@ -1,7 +1,4 @@
 .mainContainer{
-    *{
-        // outline: 1px solid red;
-    }
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -15,19 +12,9 @@
     text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
     
     .part{
+        // outline: 1px solid red;
         width: 100%;
         gap: 1rem;
-        // display: grid;
-        // grid-template-columns: 1fr 1fr 3fr;
-        // grid-template-columns: repeat(auto-fill, minmax(33%, 2fr));
-
-        // @media (max-width: 800px) {
-        //     grid-template-columns: 1fr 1fr; /* Deux colonnes */
-        //     grid-auto-rows: auto; /* Hauteur automatique des lignes */
-        //     .section:nth-child(3) {
-        //         grid-column: 1 / -1; /* Occupe toute la largeur de la grille */
-        //       }
-        // }
         display: flex;
         flex-wrap: wrap;
         &.section:nth-child(3){
@@ -54,7 +41,6 @@
             flex: 1 1 20%;
             display: flex;
             flex-direction: column;
-            grid-auto-columns: auto;
             
             
             .container{
@@ -89,11 +75,14 @@
                     display: grid;
                     gap: 0.5rem;
 
+                    &.material{
+                        grid-template-columns: 1.5rem 1fr;
+                    }
                     &.ingredient{
-                        grid-template-columns: 1fr 20%;
+                        grid-template-columns: 1.5rem 1fr 20%;
                     }
                     &.step{
-                        grid-template-columns: 5% 1fr 5% 5% 5%;
+                        grid-template-columns: 1.5rem 5% 1fr 5% 5% 5%;
                     }
 
                 }
@@ -115,17 +104,34 @@ button{
     text-align: center;
     border-radius: 4px;
     transition: background-color 0.2s ease-in-out;
-    &:hover{
-        cursor: pointer;
-        background-color: rgba(109, 126, 113, 0.25);
-    }
     i{
+        transition: all 0.2s ease-in-out;
         text-shadow: none;
-        font-size: 1.5rem;
-        padding-top: 0.3rem;
-        padding-bottom: 0.3rem;
-        color: rgb(109, 126, 113);
     }
+    &.add{
+        &:hover{
+            cursor: pointer;
+            background-color: rgba(109, 126, 113, 0.25);
+        }
+        i{
+            font-size: 1.5rem;
+            padding-top: 0.3rem;
+            padding-bottom: 0.3rem;
+            color: rgb(109, 126, 113);
+        }
+    }
+    &.delete{
+        background-color: rgba(109, 126, 113, 0.3);
+        color: rgba(109, 126, 113);
+        &:hover{
+            cursor: pointer;
+            background-color: rgba(109, 126, 113); 
+            i{
+                color: rgb(255, 255, 255);
+            }
+        }
+    }
+    
 
 }
 
@@ -138,7 +144,7 @@ input{
     
 }
 
-input.light{
+.light{
     cursor: pointer;
 
     text-align: center;
@@ -149,7 +155,7 @@ input.light{
         background-color: rgba(109, 126, 113, 0.6);
     }
 }
-input.dark{
+.dark{
     padding-top: 0.3rem;
     padding-bottom: 0.3rem;
     padding-left: 0.5rem;
@@ -163,12 +169,4 @@ input.stepNumber{
     pointer-events: none;
 }
 
-input.duration{
-    cursor: pointer;
-}
-
-// input[type="time"]::-webkit-calendar-picker-indicator {
-//     display: none;
-//     filter: invert(0.5) sepia(1) saturate(5) hue-rotate(175deg);
-//  }
 

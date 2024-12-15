@@ -13,6 +13,9 @@ export default defineConfig({
       "@Containers":path.resolve(__dirname, "./src/Containers"),
       "@Layout":path.resolve(__dirname, "./src/Layout"),
       "@Pages":path.resolve(__dirname, "./src/Pages"),
+      "@Features":path.resolve(__dirname, "./src/Features"),
+      "@Shared":path.resolve(__dirname, "./src/Shared"),
+      "@Types":path.resolve(__dirname, "./src/Shared/Types"),
 
       // "@Physics":path.resolve(__dirname, "./src/Physics/"),
       "@Sass":path.resolve(__dirname, "./src/Physics/Sass"),

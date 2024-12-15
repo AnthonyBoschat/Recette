@@ -76,43 +76,7 @@ class CreateRecette(graphene.Mutation):
     success = graphene.Boolean()
 
     def mutate(self, info, name, materials=None, ingredients=None, instructions=None):
-        print(f"materials___________________________________{materials}")
-        print(f"ingredients___________________________________{ingredients}")
-        
         recette = Recette(name=name, materials=materials, ingredients=ingredients, instructions=instructions)
-        
-        # if materials:
-        #     recette.materials = [
-        #         {
-        #             "id": material.id,
-        #             "name": material.name,
-        #         }
-        #         for material in materials
-        #     ]
-
-        # if ingredients:
-        #     recette.ingredients = [
-        #         {
-        #             "id": ingredient.id,
-        #             "name": ingredient.name,
-        #             "weight": ingredient.weight,
-        #         }
-        #         for ingredient in ingredients
-        #     ]
-
-        # if instructions:
-        #     recette.instructions = [
-        #         {
-        #             "id": instruction.id,
-        #             "step": instruction.step,
-        #             "sentence": instruction.sentence,
-        #             "hours": instruction.hours,
-        #             "minutes": instruction.minutes,
-        #             "secondes": instruction.secondes,
-        #         }
-        #         for instruction in instructions
-        #     ]
-
         recette.save()
         return CreateRecette(recette=recette, success=True)
 

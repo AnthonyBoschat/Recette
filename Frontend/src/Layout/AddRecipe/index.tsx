@@ -1,6 +1,10 @@
-import { BaseSyntheticEvent, FormEventHandler, MouseEventHandler, useReducer } from "react"
+import { BaseSyntheticEvent, useReducer } from "react"
 import s from "./style.module.scss"
 import IDService from "@Services/IDService"
+import { useMutation } from "@apollo/client"
+import { CREATE_RECETTE } from "@Mutation/CreateRecette"
+import { useDispatch } from "react-redux"
+import { addRecette } from "@Redux/Slices/RecetteSlice"
 
 interface ingredientType{
     id:number
@@ -12,9 +16,9 @@ interface instructionType{
     id:number
     step:number
     sentence:string
-    hour:number|string
-    minute:number|string
-    seconde:number|string
+    hours:number|string
+    minutes:number|string
+    secondes:number|string
 }
 
 interface materialType{
@@ -23,7 +27,7 @@ interface materialType{
 }
 
 interface recipeType{
-    recipeName:string
+    name:string
     materials:materialType[]
     ingredients:ingredientType[]
     instructions:instructionType[]
@@ -38,11 +42,13 @@ type recipeAction =
 |{type:"SET_INGREDIENT_WEIGHT", payload:{id:number, weight:number}}
 |{type:"ADD_INSTRUCTION"}
 |{type:"SET_INSTRUCTION_SENTENCE", payload:{id:number, sentence:string}}
-|{type:"SET_INSTRUCTION_HOUR", payload:{id:number, value:string}}
-|{type:"SET_INSTRUCTION_MINUTE", payload:{id:number, value:string}}
-|{type:"SET_INSTRUCTION_SECONDE", payload:{id:number, value:string}}
+|{type:"SET_INSTRUCTION_HOURs", payload:{id:number, value:string}}
+|{type:"SET_INSTRUCTION_MINUTES", payload:{id:number, value:string}}
+|{type:"SET_INSTRUCTION_SECONDES", payload:{id:number, value:string}}
+|{type:"RESET_RECIPESTATE"}
 
 export default function AddRecipeLayout(){
+
 
     const removeNullNumber = (e:BaseSyntheticEvent) => {
         if(e.currentTarget.value === "-"){
@@ -66,26 +72,39 @@ export default function AddRecipeLayout(){
         return Math.max(...instructions.map(instruction => instruction.step)) + 1
     }
 
+    // const recipeInitialState:recipeType = {
+    //     name:"Baguette de tradition française",
+    //     materials:[{id:0, name:"Pétrin axe oblique"}],
+    //     ingredients:[
+    //         {id:0, name:"Farine", weight:1000},
+    //         {id:1, name:"Eau", weight:650},
+    //         {id:2, name:"Sel", weight:18},
+    //         {id:3, name:"Levure", weight:8},
+    //     ],
+    //     instructions:[
+    //         {id:0, step:1, sentence:"Mettre la farine et l’eau dans la cuve et pétrir pendant 3 minutess jusqu’à obtenir une pâte bâtarde.", hours:"-", minutes:"-", secondes:"-"},
+    //         {id:1, step:2, sentence:"Laisser reposer la pâte dans la cuve couvert d’un linge pendant 30 minutess.", hours:"-", minutes:"-", secondes:"-"},
+    //         {id:2, step:3, sentence:"Incorporer la levure dans la pâte.", hours:"-", minutes:"-", secondes:"-"},
+    //     ]
+    // }
+
     const recipeInitialState:recipeType = {
-        recipeName:"Baguette de tradition française",
-        materials:[{id:0, name:"Pétrin axe oblique"}],
+        name:"",
+        materials:[{id:0, name:""}],
         ingredients:[
-            {id:0, name:"Farine", weight:1000},
-            {id:1, name:"Eau", weight:650},
-            {id:2, name:"Sel", weight:18},
-            {id:3, name:"Levure", weight:8},
+            {id:0, name:"", weight:0},
         ],
         instructions:[
-            {id:0, step:1, sentence:"Mettre la farine et l’eau dans la cuve et pétrir pendant 3 minutes jusqu’à obtenir une pâte bâtarde.", hour:"-", minute:"-", seconde:"-"},
-            {id:1, step:2, sentence:"Laisser reposer la pâte dans la cuve couvert d’un linge pendant 30 minutes.", hour:"-", minute:"-", seconde:"-"},
-            {id:2, step:3, sentence:"Incorporer la levure dans la pâte.", hour:"-", minute:"-", seconde:"-"},
+            {id:0, step:1, sentence:"", hours:"-", minutes:"-", secondes:"-"},
         ]
     }
 
     const recipeStateReducer = (state:recipeType, action:recipeAction):recipeType => {
         switch(action.type){
+            case "RESET_RECIPESTATE":
+                return recipeInitialState
             case "SET_RECIPE_NAME":
-                return {...state, recipeName:action.payload}
+                return {...state, name:action.payload}
             case "ADD_MATERIAL":
                 return {...state, materials:[...state.materials, {id:IDService.getNextID(state.materials), name:""}]}
             case "SET_MATERIAL":
@@ -97,24 +116,24 @@ export default function AddRecipeLayout(){
             case "SET_INGREDIENT_WEIGHT":
                 return {...state, ingredients:state.ingredients.map(ingredient => ingredient.id === action.payload.id ? {...ingredient, weight:action.payload.weight} : ingredient)}
             case "ADD_INSTRUCTION":
-                return {...state, instructions:[...state.instructions, {id:IDService.getNextID(state.instructions), step:getNextStep(state.instructions), sentence:"", hour:"-", minute:"-", seconde:"-"}]}
+                return {...state, instructions:[...state.instructions, {id:IDService.getNextID(state.instructions), step:getNextStep(state.instructions), sentence:"", hours:"-", minutes:"-", secondes:"-"}]}
             case "SET_INSTRUCTION_SENTENCE":
                 return {...state, instructions:state.instructions.map(instruction => instruction.id === action.payload.id ? {...instruction, sentence:action.payload.sentence} : instruction)}
-            case "SET_INSTRUCTION_HOUR":
+            case "SET_INSTRUCTION_HOURs":
                 if(checkNumber(action.payload.value)){
-                    return {...state, instructions:state.instructions.map(instruction => instruction.id === action.payload.id ? {...instruction, hour:action.payload.value !== "" ? parseInt(action.payload.value) : "-"} : instruction)}
+                    return {...state, instructions:state.instructions.map(instruction => instruction.id === action.payload.id ? {...instruction, hours:action.payload.value !== "" ? parseInt(action.payload.value) : "-"} : instruction)}
                 }else{
                     return state
                 }
-            case "SET_INSTRUCTION_MINUTE":
+            case "SET_INSTRUCTION_MINUTES":
                 if(checkNumber(action.payload.value)){
-                    return {...state, instructions:state.instructions.map(instruction => instruction.id === action.payload.id ? {...instruction, minute:action.payload.value !== "" ? parseInt(action.payload.value) : "-"} : instruction)}
+                    return {...state, instructions:state.instructions.map(instruction => instruction.id === action.payload.id ? {...instruction, minutes:action.payload.value !== "" ? parseInt(action.payload.value) : "-"} : instruction)}
                 }else{
                     return state
                 }
-            case "SET_INSTRUCTION_SECONDE":
+            case "SET_INSTRUCTION_SECONDES":
                 if(checkNumber(action.payload.value)){
-                    return {...state, instructions:state.instructions.map(instruction => instruction.id === action.payload.id ? {...instruction, seconde:action.payload.value !== "" ? parseInt(action.payload.value) : "-"} : instruction)}
+                    return {...state, instructions:state.instructions.map(instruction => instruction.id === action.payload.id ? {...instruction, secondes:action.payload.value !== "" ? parseInt(action.payload.value) : "-"} : instruction)}
                 }else{
                     return state
                 }
@@ -124,11 +143,32 @@ export default function AddRecipeLayout(){
     }
 
     const [recipeState, recipeDispatch] = useReducer(recipeStateReducer, recipeInitialState)
+    const dispatch = useDispatch()
+    const [createRecette, { data, loading, error }] = useMutation(CREATE_RECETTE, {
+        onCompleted: (data) => {
+            console.log(data)
+            recipeDispatch({type:"RESET_RECIPESTATE"})
+            dispatch(addRecette(data.createRecette.recette))
+        },
+        onError: (error) => {
+            console.error("Erreur lors de la création de la recette")
+        }
+    });
 
-    const handleSubmit = (e:BaseSyntheticEvent) => {
+    const handleSubmit = async (e:BaseSyntheticEvent) => {
         e.preventDefault()
-        console.log("submit")
-        console.log(recipeState)
+        const variables = {
+            name:recipeState.name,
+            materials:recipeState.materials,
+            ingredients:recipeState.ingredients,
+            instructions:recipeState.instructions.map(instruction => {
+                instruction.hours = instruction.hours === "-" ? 0 : instruction.hours
+                instruction.minutes = instruction.minutes === "-" ? 0 : instruction.minutes
+                instruction.secondes = instruction.secondes === "-" ? 0 : instruction.secondes
+                return instruction
+            })
+        }
+        createRecette({variables:variables})
     }
 
 
@@ -140,7 +180,7 @@ export default function AddRecipeLayout(){
             <div className={`${s.part} ${s.header}`}>
                 <div className={`${s.section}`}>
                     <label htmlFor="">Nom</label>
-                    <input onChange={(e) => recipeDispatch({type:"SET_RECIPE_NAME", payload:e.currentTarget.value})} type="text" className={`${s.dark}`} value={recipeState.recipeName} />
+                    <input required onChange={(e) => recipeDispatch({type:"SET_RECIPE_NAME", payload:e.currentTarget.value})} type="text" className={`${s.dark}`} value={recipeState.name} />
                 </div>
                 <input type="submit" className={`${s.dark} ${s.submit}`} value={"Enregistrer la recette"} />
             </div>
@@ -193,9 +233,9 @@ export default function AddRecipeLayout(){
                             <div key={instruction.id} className={`${s.step}`}>
                                 <input onChange={() => null} className={`${s.stepNumber} ${s.light}`} type="number" value={instruction.step} />
                                 <input required onChange={(e) => recipeDispatch({type:"SET_INSTRUCTION_SENTENCE", payload:{id:instruction.id, sentence:e.currentTarget.value}})} className={`${s.instruction} ${s.dark}`} type="text" value={instruction.sentence} />
-                                <input onChange={(e) => recipeDispatch({type:"SET_INSTRUCTION_HOUR", payload:{id:instruction.id, value:e.currentTarget.value}})} className={`${s.light} ${s.duration}`} onBlur={addNullNumber} value={instruction.hour} onFocus={removeNullNumber} type="text" />
-                                <input onChange={(e) => recipeDispatch({type:"SET_INSTRUCTION_MINUTE", payload:{id:instruction.id, value:e.currentTarget.value}})} className={`${s.light} ${s.duration}`} onBlur={addNullNumber} value={instruction.minute} onFocus={removeNullNumber} type="text" />
-                                <input onChange={(e) => recipeDispatch({type:"SET_INSTRUCTION_SECONDE", payload:{id:instruction.id, value:e.currentTarget.value}})} className={`${s.light} ${s.duration}`} onBlur={addNullNumber} value={instruction.seconde} onFocus={removeNullNumber} type="text" />
+                                <input onChange={(e) => recipeDispatch({type:"SET_INSTRUCTION_HOURs", payload:{id:instruction.id, value:e.currentTarget.value}})} className={`${s.light} ${s.duration}`} onBlur={addNullNumber} value={instruction.hours} onFocus={removeNullNumber} type="text" />
+                                <input onChange={(e) => recipeDispatch({type:"SET_INSTRUCTION_MINUTES", payload:{id:instruction.id, value:e.currentTarget.value}})} className={`${s.light} ${s.duration}`} onBlur={addNullNumber} value={instruction.minutes} onFocus={removeNullNumber} type="text" />
+                                <input onChange={(e) => recipeDispatch({type:"SET_INSTRUCTION_SECONDES", payload:{id:instruction.id, value:e.currentTarget.value}})} className={`${s.light} ${s.duration}`} onBlur={addNullNumber} value={instruction.secondes} onFocus={removeNullNumber} type="text" />
                             </div>
                         ))}
                         <button onClick={() => recipeDispatch({type:"ADD_INSTRUCTION"})}>

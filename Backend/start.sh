@@ -10,11 +10,11 @@ source env/bin/activate
 
 # Appliquer les migrations
 echo "Application des migrations..."
-python manage.py migrate
+python3 manage.py migrate
 
 # Démarrer le serveur Django
 echo "Démarrage du serveur Django..."
-python manage.py runserver &
+python3 manage.py runserver &
 
 # Capturer le PID du serveur Django
 SERVER_PID=$!

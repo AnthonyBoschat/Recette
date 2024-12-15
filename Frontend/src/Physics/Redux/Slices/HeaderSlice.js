@@ -18,7 +18,6 @@ export const headerSlice = createSlice({
 });
 
 export const { 
-    selectButton
 } = headerSlice.actions;
 
 export const headerSliceReducer = headerSlice.reducer;

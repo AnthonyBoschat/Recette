@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 GRAPHENE = {
-    
+    "SCHEMA":"recette.schema.schema"
 }
 
 INSTALLED_APPS = [
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'graphene_django',
     'corsheaders',
+    'recette',
 ]
 
 CORS_ALLOWED_ORIGINS = [

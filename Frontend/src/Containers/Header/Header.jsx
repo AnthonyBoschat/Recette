@@ -1,6 +1,5 @@
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import s from "./Header.module.scss"
-import { selectButton } from "@Redux/Slices/HeaderSlice"
 import { useLocation, useNavigate } from "react-router-dom"
 
 export default function Header(){

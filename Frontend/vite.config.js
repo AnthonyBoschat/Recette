@@ -18,6 +18,7 @@ export default defineConfig({
       "@Sass":path.resolve(__dirname, "./src/Physics/Sass"),
       "@Redux":path.resolve(__dirname, "./src/Physics/Redux"),
       "@Query":path.resolve(__dirname, "./src/Physics/Query"),
+      "@Mutation":path.resolve(__dirname, "./src/Physics/Mutation"),
       "@Services":path.resolve(__dirname, "./src/Physics/Services"),
       "@Utils":path.resolve(__dirname, "./src/Physics/Utils"),
       "@Constants":path.resolve(__dirname, "./src/Physics/Constants"),

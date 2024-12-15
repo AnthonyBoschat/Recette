@@ -23,6 +23,7 @@
       "@Sass/*": ["src/Physics/Sass/*"],
       "@Redux/*": ["src/Physics/Redux/*"],
       "@Query/*": ["src/Physics/Query/*"],
+      "@Mutation/*": ["src/Physics/Mutation/*"],
       "@Services/*": ["src/Physics/Services/*"],
       "@Utils/*": ["src/Physics/Utils/*"],
       "@Constants/*": ["src/Physics/Constants/*"]

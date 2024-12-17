@@ -27,6 +27,7 @@ type recipeAction =
 |{type:"SET_INSTRUCTION_MINUTES", payload:{id:number, value:string}}
 |{type:"SET_INSTRUCTION_SECONDES", payload:{id:number, value:string}}
 |{type:"DELETE_INSTRUCTION", payload:number}
+|{type:"REORDER_INSTRUCTIONS", payload:instructionType[]}
 |{type:"RESET_RECIPESTATE"}
 
 export default function AddRecipeLayout(){
@@ -41,7 +42,11 @@ export default function AddRecipeLayout(){
     }
 
     const getNextStep = (instructions : instructionType[]) => {
-        return Math.max(...instructions.map(instruction => instruction.step)) + 1
+        if(instructions.length !== 0){
+            return Math.max(...instructions.map(instruction => instruction.step)) + 1
+        }else{
+            return 1
+        }
     }
 
     const recipeInitialState:recipeType = {
@@ -72,6 +77,7 @@ export default function AddRecipeLayout(){
     // }
 
     const recipeStateReducer = (state:recipeType, action:recipeAction):recipeType => {
+        let step = 1
         switch(action.type){
             case "RESET_RECIPESTATE":
 
@@ -117,8 +123,8 @@ export default function AddRecipeLayout(){
                 }else{
                     return state
                 }
+
             case "DELETE_INSTRUCTION":
-                let step = 1
                 const newInstructions = state.instructions.filter(instruction => instruction.id !== action.payload)
                 newInstructions.map(instruction => {
                     instruction.step = step
@@ -127,6 +133,17 @@ export default function AddRecipeLayout(){
                 })
                 
                 return {...state, instructions:newInstructions}
+
+            case "REORDER_INSTRUCTIONS":
+                const reorderedInstruction = action.payload
+                reorderedInstruction.forEach(instruction => {
+                    instruction.step = step
+                    step++
+                })
+                state.instructions = reorderedInstruction
+                console.log(state)
+                return state
+
             default:
                 return state
         }

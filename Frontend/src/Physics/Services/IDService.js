@@ -1,7 +1,11 @@
 class IDService{
 
     static getNextID(array){
-        return Math.max(...array.map(mat => mat.id)) + 1
+        if(array.length !== 0){
+            return Math.max(...array.map(mat => mat.id)) + 1
+        }else{
+            return 0
+        }
     }
 }
 

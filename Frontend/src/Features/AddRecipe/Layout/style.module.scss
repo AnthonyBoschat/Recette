@@ -82,7 +82,7 @@
                         grid-template-columns: 1.5rem 1fr 20%;
                     }
                     &.step{
-                        grid-template-columns: 1.5rem 5% 1fr 5% 5% 5%;
+                        grid-template-columns: 2rem 1.5rem 5% 1fr 5% 5% 5%;
                     }
 
                 }
@@ -131,12 +131,22 @@ button{
             }
         }
     }
+    &.moove{
+        pointer-events: none;
+        background-color: rgba(109, 126, 113);
+        color: rgba(254, 254, 254, 0.650);
+        &:hover{
+            cursor: grab;
+            color: rgba(254, 254, 254, 0.750);;
+        }
+    }
     
 
 }
 
 input{
     all: unset;
+    cursor:auto;
     border-radius: 4px;
     &::-webkit-inner-spin-button,::-webkit-outer-spin-button{
         -webkit-appearance: none;

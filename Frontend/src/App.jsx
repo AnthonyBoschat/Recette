@@ -1,10 +1,10 @@
 
-import Header from "@Containers/Header/Header";
+import Header from "@Shared/Layout/Header/Header";
 import "./App.scss"
 import { useDispatch } from "react-redux";
 import { Routes, Route } from "react-router-dom";
-import ExploreRecipePage from "@Pages/ExploreRecipe";
-import MyRecipePage from "@Pages/MyRecipe";
+import ExploreRecipePage from "@Features/ExploreRecipe/Page";
+import MyRecipePage from "@Features/ListRecipe/Page";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_RECETTES } from "@Query/GetAllRecettes";
 import { useEffect } from "react";
@@ -17,12 +17,13 @@ export default function App() {
 
   const dispatch = useDispatch()
   
-  const {loading, error, data} = useQuery(GET_ALL_RECETTES)
+  // Récupère la liste des recettes
+  const {loading:allRecettesLoading, error:allRecettesError, data:allRecettesData} = useQuery(GET_ALL_RECETTES)
   useEffect(() => {
-    if(!loading && data){
-      dispatch(setRecettes(data.allRecettes))
+    if(!allRecettesLoading && allRecettesData){
+      dispatch(setRecettes(allRecettesData.allRecettes))
     }
-  }, [loading])
+  }, [allRecettesLoading])
 
 
   

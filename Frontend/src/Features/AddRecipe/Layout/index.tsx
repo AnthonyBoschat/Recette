@@ -9,7 +9,6 @@ import AddMaterials from "../Components/AddMaterials"
 import AddIngredients from "../Components/AddIngredients"
 import AddSteps from "../Components/AddSteps"
 import { instructionType, recipeType } from "@Shared/Types/Recipe"
-import AddRecipeName from "../Components/AddRecipeHeader"
 import AddRecipeHeader from "../Components/AddRecipeHeader"
 
 type recipeAction = 
@@ -162,6 +161,7 @@ export default function AddRecipeLayout(){
     });
 
     const handleSubmit = async (e:BaseSyntheticEvent) => {
+        console.log("controle")
         e.preventDefault()
         const variables = {
             name:recipeState.name,
